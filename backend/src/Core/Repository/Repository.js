@@ -5,6 +5,10 @@ export default class Repository {
     this.crud = new MongoRepository(databaseName, collectionName);
 	}
 
+	static strToId(id) {
+    return MongoRepository.strToId(id);
+  }
+
 	static async getClient(dbUri) {
 		return MongoRepository.getClient(dbUri);
 	}

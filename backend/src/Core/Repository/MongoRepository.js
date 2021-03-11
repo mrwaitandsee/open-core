@@ -1,9 +1,13 @@
-import { MongoClient } from 'mongodb';
+import { MongoClient, ObjectId } from 'mongodb';
 
 export default class MongoRepository {
   constructor(databaseName, collectionName) {
     this.databaseName = databaseName;
     this.collectionName = collectionName;
+  }
+
+  static strToId(id) {
+    return new ObjectId(id);
   }
 
   static async getClient(dbUri) {

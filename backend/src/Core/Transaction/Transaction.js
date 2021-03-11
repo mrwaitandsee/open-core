@@ -10,6 +10,10 @@ export default class Transaction {
     );
   }
 
+  static strToId(id) {
+    return Repository.strToId(id);
+  }
+
   static async getClient(dbUri) {
 		return Repository.getClient(dbUri);
 	}
