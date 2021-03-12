@@ -85,6 +85,7 @@ export class Login extends BaseComponent {
           if (compare) {
             const accessToken = jwt.sign({
               user: usrs[0]._id,
+              hash: emailPasswordSecrets[0].password,
             }, Configuration.getJwtSecret());
             response.status(200).json({
               success: true,

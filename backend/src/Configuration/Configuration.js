@@ -4,6 +4,10 @@ export default class Configuration {
     return process.env.PORT || 4000;
   }
 
+  static getApiUri() {
+    return process.env.API_URI || 'http://localhost:4000/';
+  }
+
   static getDatabaseUri() {
     return process.env.DB_URI || 'mongodb://localhost:27017/';
   }

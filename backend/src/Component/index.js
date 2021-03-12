@@ -3,3 +3,4 @@ export * from './Login';
 export * from './ValidateEmail';
 export * from './ValidateUsername';
 export * from './FolderCreate';
+export * from './PasswordRecoveryGenerateUrl';
