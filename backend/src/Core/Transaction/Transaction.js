@@ -1,7 +1,7 @@
 import Repository from '../Repository';
 
 export default class Transaction {
-  constructor(databaseName, collectionName) {
+  constructor(databaseName, collectionName = '') {
     this.databaseName = databaseName;
     this.collectionName = collectionName;
     this.repositoryOfCore = new Repository('CORE', 'transactions');

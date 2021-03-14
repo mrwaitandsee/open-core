@@ -3,6 +3,7 @@ import Configuration from '../../Configuration';
 import Transaction from '../../Core/Transaction';
 import HashController from '../HashController';
 import MailerController from '../MailerController';
+import jwt from 'jsonwebtoken';
 
 export default class ChangePasswordByUserId {
   constructor(client, transactionId, userId, newPassword) {
@@ -35,5 +36,14 @@ export default class ChangePasswordByUserId {
     mailer.send(Configuration.getMailerAuthUser(), emailPasswordSecret.email, 'OpenCore Password has been changed.',
       'Your password has been changed, if it is not you, restore your password on the site.',
     );
+  }
+
+  async getNewJwt() {
+    const getEmailPasswordSecretByUserId = new GetEmailPasswordSecretByUserId(this.userId, this.client, this.transactionId);
+    const emailPasswordSecret = await getEmailPasswordSecretByUserId.getFirstEmailPasswordSecret();
+    return jwt.sign({
+      user: this.userId,
+      hash: emailPasswordSecret.password,
+    }, Configuration.getJwtSecret());
   }
 }
