@@ -2,8 +2,7 @@ import BaseComponent from '../BaseComponent';
 import Configuration from '../../Configuration';
 import CryptoController from '../../Service/CryptoController';
 import Transaction from '../../Core/Transaction';
-import GetEmailPasswordSecretByUserId from '../../Service/GetEmailPasswordSecretByUserId';
-import MailerController from '../../Service/MailerController';
+import ChangePasswordByUserId from '../../Service/ChangePasswordByUserId';
 
 const method = 'POST';
 const action = 'demilitarized-zone/password-recovery';
@@ -24,19 +23,17 @@ export class PasswordRecovery extends BaseComponent {
     const passwordRecoveryData = await passwordRecovery.read(client, transactionId, {
       uuid,
     }, 0, 1);
-    if (!passwordRecoveryData.length) super.res(response, 404, false, 'Cannot recover password.');
+    if (!passwordRecoveryData.length) {
+      super.res(response, 404, false, 'Cannot recover password.');
+      return;
+    }
     const { userId } = passwordRecoveryData[0];
-    const getterEmailPasswordSecretByUserId = new GetEmailPasswordSecretByUserId(userId, client, transactionId);
-    const emailPasswordSecret = await getterEmailPasswordSecretByUserId.getFirstEmailPasswordSecret();
-    const mailer = new MailerController(
-      Configuration.getMailerService(),
-      Configuration.getMailerHost(),
-      Configuration.getMailerAuthUser(),
-      Configuration.getMailerAuthPass(),
-    );
-    mailer.send(Configuration.getMailerAuthUser(), emailPasswordSecret.email, 'OpenCore Password has been changed.',
-      'Your password has been changed, if it is not you, restore your password on the site.',
-    );
+
+    const changePasswordByUserId = new ChangePasswordByUserId(client, transactionId, userId, password);
+    await changePasswordByUserId.change();
+    await passwordRecovery.delete(client, transactionId, {
+      uuid,
+    });
     await passwordRecovery.disableTransaction(client, transactionId);
     super.res(response, 200, true, 'Password recovered.');
   }

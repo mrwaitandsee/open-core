@@ -10,7 +10,7 @@ export default class BaseComponent {
     this.router[this.method.toLowerCase()](
       `/${this.action}`,
       (request, response, next) => {
-        handler(request, response, next)
+        handler(request, response, next).catch((error) => { console.log('Exception: ', error) })
       }
     );
     console.log('Route created:', this.method.toUpperCase(), `/api/${this.action}`);
