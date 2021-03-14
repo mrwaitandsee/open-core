@@ -1,5 +1,4 @@
 import BaseComponent from '../BaseComponent';
-import Configuration from '../../Configuration';
 
 const method = 'POST';
 const action = 'militarized-zone/me';

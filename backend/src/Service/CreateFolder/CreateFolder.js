@@ -50,7 +50,10 @@ export default class CreateFolder {
     const closestFolderMember = await getterClosestRecordOfMemberFolder.getRecord();
     if (!closestFolderMember) {
       if (path.split('/')[0] == userId) {
-        await folders.create(client, transactionId, [{ path }]);
+        let parentFolderId = null;
+        const parentFolderData = await folders.read(client, transactionId, { path: parentPath }, 0, 1);
+        if (parentFolderData.length) parentFolderId = parentFolderData[0]._id;
+        await folders.create(client, transactionId, [{ path, parentFolder: parentFolderId }]);
         const newFolder = (await folders.read(client, transactionId, { path }))[0];
         await folderMembers.create(client, transactionId, [
           {
@@ -68,7 +71,10 @@ export default class CreateFolder {
       }
     } else {
       if (closestFolderMember.operation === 'w') {
-        await folders.create(client, transactionId, [{ path }]);
+        let parentFolderId = null;
+        const parentFolderData = await folders.read(client, transactionId, { path: parentPath }, 0, 1);
+        if (parentFolderData.length) parentFolderId = parentFolderData[0]._id;
+        await folders.create(client, transactionId, [{ path, parentFolder: parentFolderId }]);
         await users.disableTransaction(client, transactionId);
         return { error: 200, message: 'Folder created.', success: true };
       } else {

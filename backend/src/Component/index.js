@@ -7,3 +7,4 @@ export * from './PasswordRecoveryGenerateUrl';
 export * from './PasswordRecovery';
 export * from './ChangePassword';
 export * from './Me';
+export * from './FoldersGet';
