@@ -2,6 +2,7 @@ import BaseComponent from '../BaseComponent';
 import Configuration from '../../Configuration';
 import CryptoController from '../../Service/CryptoController';
 import Transaction from '../../Core/Transaction';
+import GetClosestRecordOfMemberFolder from '../../Service/GetClosestRecordOfMemberFolder';
 
 const method = 'GET';
 const action = 'militarized-zone/folder-management/folder';
@@ -44,20 +45,45 @@ export class FoldersGet extends BaseComponent {
       );
     });
     const foldersDirtData = await Promise.all(getFolderPromises);
-    const foldersData = foldersDirtData.reduce((result, current) => {
+    const foldersDataNoSorted = foldersDirtData.reduce((result, current) => {
       if (!current.length) return result;
-      result.push({
-        folder: current[0],
-        rules: {},
-      });
+      result.push(current[0]);
       return result;
     }, []);
+    let foldersData = foldersDataNoSorted.sort((a, b) => {
+      return a.path.length - b.path.length;
+    });
+
+    for (let i = 0; i < foldersData.length; i += 1) {
+      for (let j = i + 1; j < foldersData.length; j += 1) {
+        if (foldersData[i].path === foldersData[j].path.substr(0, foldersData[i].path.length)) {
+          foldersData[j]._remove = true;
+        }
+      }
+    }
+    const resultedFolders = foldersData.reduce((accumulator, current) => {
+      if (!current._remove) accumulator.push(current);
+      return accumulator;
+    }, []);
+
+    const resultedMemberPromises = [];
+    for (let i = 0; i < resultedFolders.length; i += 1) {
+      const controller = new GetClosestRecordOfMemberFolder(client, transactionId, resultedFolders[i].path, userId);
+      resultedMemberPromises.push(controller.getRecord());
+    };
+    const resulterMembers = await Promise.all(resultedMemberPromises);
+    const result = resultedFolders.map((value, index) => {
+      return {
+        folder: value,
+        rules: resulterMembers[index],
+      };
+    });
 
     await onOffTransaction.disableTransaction(client, transactionId);
 
     super.res(response, 200, true, {
       message: 'The folders were received successfully.',
-      data: foldersData,
+      data: result,
     });
   }
 }
