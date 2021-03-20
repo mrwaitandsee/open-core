@@ -4,9 +4,9 @@ import CryptoController from '../../Service/CryptoController';
 import Transaction from '../../Core/Transaction';
 import GetClosestRecordOfMemberFolder from '../../Service/GetClosestRecordOfMemberFolder';
 
-const method = 'GET';
+const method = 'PATCH';
 const action = 'militarized-zone/folder-management/folder/:folderId';
-export class FoldersGetById extends BaseComponent {
+export class FoldersUpdate extends BaseComponent {
   constructor(router) {
     super(router, method, action);
     super.initialization(this.handler);
@@ -15,6 +15,7 @@ export class FoldersGetById extends BaseComponent {
   async handler(request, response, next) {
     const { user } = request.user;
     const { folderId } = request.params;    
+    const { name } = request.body;
     const cryptoController = new CryptoController();
     const transactionId = cryptoController.random();
     const client = await Transaction.getClient(Configuration.getDatabaseUri());
@@ -40,26 +41,8 @@ export class FoldersGetById extends BaseComponent {
       super.res(response, 403, false, 'Not enough rights.');
       return;
     }
-    const foldersData = await folders.read(client, transactionId, {
-      parentFolder: foldersDataParentFolder[0]._id,
-    });
-    const getClosestRecordOfMemberFolderPromises = [];
-    foldersData.forEach((it) => {
-      const getClosestRecordOfMemberFolder = new GetClosestRecordOfMemberFolder(client, transactionId, it.path, userId);
-      getClosestRecordOfMemberFolderPromises.push(getClosestRecordOfMemberFolder.getRecord());
-    });
-    const gettedClosestRecordOfMemberFolder = await Promise.all(getClosestRecordOfMemberFolderPromises);
-    const results = [];
-    for (let i = 0; i < foldersData.length; i += 1) {
-      results.push({
-        folder: foldersData[i],
-        rules: gettedClosestRecordOfMemberFolder[i],
-      });
-    }
+
     await onOffTransaction.disableTransaction(client, transactionId);
-    super.res(response, 200, true, {
-      message: 'The folders were received successfully.',
-      data: results,
-    });
+    super.res(response, 200, true, 'Updated successfully.');
   }
 }
