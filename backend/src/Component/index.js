@@ -9,3 +9,4 @@ export * from './ChangePassword';
 export * from './Me';
 export * from './FoldersGet';
 export * from './FoldersGetById';
+export * from './FoldersUpdate';
