@@ -14,7 +14,7 @@ export class FoldersGetById extends BaseComponent {
 
   async handler(request, response, next) {
     const { user } = request.user;
-    const { folderId } = request.params;    
+    const { folderId } = request.params;
     const cryptoController = new CryptoController();
     const transactionId = cryptoController.random();
     const client = await Transaction.getClient(Configuration.getDatabaseUri());

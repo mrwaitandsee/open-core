@@ -5,9 +5,9 @@ import Transaction from '../../Core/Transaction';
 import GetClosestRecordOfMemberFolder from '../../Service/GetClosestRecordOfMemberFolder';
 import GetAllChildFolders from '../../Service/GetAllChildFolders';
 
-const method = 'PATCH';
+const method = 'DELETE';
 const action = 'militarized-zone/folder-management/folder/:folderId';
-export class FoldersUpdate extends BaseComponent {
+export class FoldersDelete extends BaseComponent {
   constructor(router) {
     super(router, method, action);
     super.initialization(this.handler);
@@ -15,7 +15,7 @@ export class FoldersUpdate extends BaseComponent {
 
   async handler(request, response, next) {
     const { user } = request.user;
-    const { folderId } = request.params;    
+    const { folderId } = request.params;
     const { name } = request.body;
     if (!name) {
       super.res(response, 409, false, 'No name field.');
@@ -46,43 +46,32 @@ export class FoldersUpdate extends BaseComponent {
       super.res(response, 403, false, 'Not enough rights.');
       return;
     }
-    const newPathArray = foldersDataParentFolder[0].path.split('/');
-    newPathArray.pop();
-    newPathArray.push(name);
-    const newPath = newPathArray.join('/');
-    const pathFolder = await folders.read(client, transactionId, { path: newPath }, 0, 1);
-    if (pathFolder.length) {
-      await onOffTransaction.disableTransaction(client, transactionId);
-      super.res(response, 409, false, 'Folder already exists.');
-      return;
-    }
+    
     const getAllChildFoldersController = new GetAllChildFolders(client, transactionId, foldersDataParentFolder[0]._id);
     const allChildFolders = await getAllChildFoldersController.getFolders();
     let allFolders = [
       foldersDataParentFolder[0],
       ...allChildFolders,
     ];
-    allFolders = allFolders.sort((a, b) => {
-      return a.path.length - b.path.length;
-    });
-    const folderNameIndex = allFolders[0].path.split('/').length - 1;
-    for (let i = 0; i < allFolders.length; i += 1) {
-      const array = allFolders[i].path.split('/');
-      array[folderNameIndex] = name;
-      allFolders[i].path = array.join('/');
+
+    const folderMembers = new Transaction(Configuration.getDatabaseName(), 'folderMembers');
+    const removeFolder = async (folderId) => {      
+      await folderMembers.delete(client, transactionId, {
+        folderId,
+      });
+      await folders.delete(client, transactionId, {
+        _id: folderId,
+      });
     }
     const promises = [];
-    allFolders.forEach((folder) => {
+    for (let i = 0; i < allFolders.length; i += 1) {
       promises.push(
-        folders.update(client, transactionId, {
-          _id: folder._id,
-        }, {
-          path: folder.path,
-        }),
+        removeFolder(allFolders[i]._id)
       );
-    });
+    }
     await Promise.all(promises);
+
     await onOffTransaction.disableTransaction(client, transactionId);
-    super.res(response, 200, true, 'Updated successfully.');
+    super.res(response, 200, true, 'Deleted successfully.');
   }
 }
