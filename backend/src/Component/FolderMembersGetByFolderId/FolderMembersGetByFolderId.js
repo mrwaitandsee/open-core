@@ -39,11 +39,13 @@ export class FolderMembersGetByFolderId extends BaseComponent {
     if (!foldersData.length) {
       await onOffTransaction.disableTransaction(client, transactionId);
       super.res(response, 409, true, 'You cannot take this action.');
+      return;
     }
     const getClosestRecordOfMemberFolder = new GetClosestRecordOfMemberFolder(client, transactionId, foldersData[0].path, user);
     if (!getClosestRecordOfMemberFolder) {
       await onOffTransaction.disableTransaction(client, transactionId);
       super.res(response, 409, true, 'You cannot take this action.');
+      return;
     }
     const dirs = new GetParentDirsFromDir(foldersData[0].path).getParentDirs();
     const getFolderPromises = [];
@@ -71,8 +73,8 @@ export class FolderMembersGetByFolderId extends BaseComponent {
     const map = new Map();
     for (let i = 0; i < members.length; i += 1) {
       for (let j = 0; j < members[i].length; j += 1) {
-        if (!map.has(members[i][j].userId)) {
-          map.set(members[i][j].userId, members[i][j]);
+        if (!map.has('id:' + members[i][j].userId)) {
+          map.set('id:' + members[i][j].userId, members[i][j]);
         }
       }
     }

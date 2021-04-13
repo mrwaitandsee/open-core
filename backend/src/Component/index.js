@@ -12,3 +12,6 @@ export * from './FoldersGetById';
 export * from './FoldersUpdate';
 export * from './FoldersDelete';
 export * from './FolderMembersGetByFolderId';
+export * from './FolderMembersCreate';
+export * from './FolderMembersUpdate';
+export * from './FolderMembersDelete';
