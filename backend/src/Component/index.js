@@ -15,3 +15,4 @@ export * from './FolderMembersGetByFolderId';
 export * from './FolderMembersCreate';
 export * from './FolderMembersUpdate';
 export * from './FolderMembersDelete';
+export * from './AppReferencesCreate';
