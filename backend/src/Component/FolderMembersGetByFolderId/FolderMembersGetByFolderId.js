@@ -38,13 +38,13 @@ export class FolderMembersGetByFolderId extends BaseComponent {
     }, 0, 1);
     if (!foldersData.length) {
       await onOffTransaction.disableTransaction(client, transactionId);
-      super.res(response, 409, true, 'You cannot take this action.');
+      super.res(response, 409, false, 'You cannot take this action.');
       return;
     }
     const getClosestRecordOfMemberFolder = new GetClosestRecordOfMemberFolder(client, transactionId, foldersData[0].path, user);
     if (!getClosestRecordOfMemberFolder) {
       await onOffTransaction.disableTransaction(client, transactionId);
-      super.res(response, 409, true, 'You cannot take this action.');
+      super.res(response, 409, false, 'You cannot take this action.');
       return;
     }
     const dirs = new GetParentDirsFromDir(foldersData[0].path).getParentDirs();

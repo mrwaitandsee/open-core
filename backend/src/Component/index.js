@@ -16,3 +16,7 @@ export * from './FolderMembersCreate';
 export * from './FolderMembersUpdate';
 export * from './FolderMembersDelete';
 export * from './AppReferencesCreate';
+export * from './AppReferencesGet';
+export * from './AppReferencesGetByAppReferenceId';
+export * from './AppReferencesUpdate';
+export * from './AppsCreate';
