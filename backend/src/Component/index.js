@@ -20,3 +20,4 @@ export * from './AppReferencesGet';
 export * from './AppReferencesGetByAppReferenceId';
 export * from './AppReferencesUpdate';
 export * from './AppsCreate';
+export * from './AppsUpdate';
