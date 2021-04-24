@@ -31,7 +31,7 @@ export class AppReferencesGetByAppReferenceId extends BaseComponent {
     }, 0, 1);
     if (!appReferencesData.length) {
       await onOffTransaction.disableTransaction(client, transactionId);
-      super.res(response, 404, true, 'Cannot find this app ref.');
+      super.res(response, 404, false, 'Cannot find this app ref.');
       return;
     }
     await onOffTransaction.disableTransaction(client, transactionId);
