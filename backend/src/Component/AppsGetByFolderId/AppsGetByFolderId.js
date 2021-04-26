@@ -14,7 +14,6 @@ export class AppsGetByFolderId extends BaseComponent {
     const { user } = request.user;
     const { folderId } = request.params;
     
-    
     const getAppsByFolderId = new GetAppsByFolderId(Transaction.strToId(user), Transaction.strToId(folderId));
     const result = await getAppsByFolderId.getApps();
 
