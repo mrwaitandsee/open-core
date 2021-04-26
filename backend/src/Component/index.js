@@ -22,3 +22,4 @@ export * from './AppReferencesUpdate';
 export * from './AppsCreate';
 export * from './AppsUpdate';
 export * from './AppsGetByFolderId';
+export * from './AppsDelete';
