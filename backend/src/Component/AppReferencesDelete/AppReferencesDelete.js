@@ -3,9 +3,9 @@ import Configuration from '../../Configuration';
 import Transaction from '../../Core/Transaction';
 import CryptoController from '../../Service/CryptoController';
 
-const method = 'PATCH';
+const method = 'DELETE';
 const action = 'militarized-zone/app-references-management/app-references/:appReferenceId';
-export class AppReferencesUpdate extends BaseComponent {
+export class AppReferencesDelete extends BaseComponent {
   constructor(router) {
     super(router, method, action);
     super.initialization(this.handler);
@@ -15,10 +15,6 @@ export class AppReferencesUpdate extends BaseComponent {
     const { user } = request.user;
     const { appReferenceId } = request.params;
     const userId = Transaction.strToId(user);
-
-    const updatedObj = {};
-    if (request.body.name) updatedObj.name = request.body.name;
-    if (request.body.appHost) updatedObj.appHost = request.body.appHost;
     
     const cryptoController = new CryptoController();
     const transactionId = cryptoController.random();
@@ -29,6 +25,10 @@ export class AppReferencesUpdate extends BaseComponent {
       Configuration.getDatabaseName(),
       'appReferences',
     );
+    const apps = new Transaction(
+      Configuration.getDatabaseName(),
+      'apps',
+    );
 
     const appReferencesData = await appReferences.read(client, transactionId, {
       _id: Transaction.strToId(appReferenceId),
@@ -36,19 +36,23 @@ export class AppReferencesUpdate extends BaseComponent {
     }, 0, 1);
     if (!appReferencesData.length) {
       await onOffTransaction.disableTransaction(client, transactionId);
-      super.res(response, 404, false, 'Cannot update this app ref.');
+      super.res(response, 404, false, 'Cannot delete this app ref.');
       return;
     }
-    const isSuccess = await appReferences.update(client, transactionId, {
+    const isSuccessDelAppRef = await appReferences.delete(client, transactionId, {
       _id: Transaction.strToId(appReferenceId),
       userId,
-    }, updatedObj);
+    });
+    const isSuccessDelApps = await apps.delete(client, transactionId, {
+      appReferenceId: Transaction.strToId(appReferenceId),
+      userId,
+    });
     await onOffTransaction.disableTransaction(client, transactionId);
 
-    if (isSuccess) {
-      super.res(response, 200, true, 'App ref updated successfully.');
+    if (isSuccessDelAppRef && isSuccessDelApps) {
+      super.res(response, 200, true, 'App ref deleted successfully.');
     } else {
-      super.res(response, 403, false, 'Cannot update this app ref.');
+      super.res(response, 403, false, 'Cannot delete this app ref.');
     }
   }
 }
