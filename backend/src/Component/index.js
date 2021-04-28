@@ -25,3 +25,4 @@ export * from './AppsGetByFolderId';
 export * from './AppsDelete';
 export * from './AppReferencesDelete';
 export * from './GenerateTokenForApp';
+export * from './CheckTokenForApp';

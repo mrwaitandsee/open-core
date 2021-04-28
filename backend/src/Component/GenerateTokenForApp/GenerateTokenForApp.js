@@ -6,7 +6,7 @@ import Transaction from '../../Core/Transaction';
 import GetClosestRecordOfMemberFolder from '../../Service/GetClosestRecordOfMemberFolder';
 
 const method = 'POST';
-const action = 'militarized-zone/apps-management/apps/generate-token-for-app/:appId';
+const action = 'militarized-zone/apps-management/generate-token-for-app/:appId';
 export class GenerateTokenForApp extends BaseComponent {
   constructor(router) {
     super(router, method, action);
