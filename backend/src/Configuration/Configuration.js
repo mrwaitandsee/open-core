@@ -1,7 +1,7 @@
 
 export default class Configuration {
   static getPortOfApp() {
-    return process.env.PORT || 4000;
+    return process.env.PORT || 6000;
   }
 
   static getApiUri() {

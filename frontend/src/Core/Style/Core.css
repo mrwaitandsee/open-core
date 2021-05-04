@@ -1,0 +1,94 @@
+body {
+  padding: 0;
+  margin:  0;
+}
+
+.col-container {
+  display:        flex;
+  flex-direction: column;
+}
+.align-left   { justify-content: flex-start; }
+.align-right  { justify-content: flex-end;   }
+.align-center { justify-content: center;     }
+
+.row-container {
+  display:        flex;
+  flex-direction: row;
+}
+
+.text-align-left   { text-align: left;   }
+.text-align-center { text-align: center; }
+.text-align-right  { text-align: right;  }
+
+.slide-height { height: 100vh; }
+
+@media only screen and (max-width: 575px) {
+  /* For mobile phones: */
+  .hide-mobile   { display: none; }
+  .col-mobile-1  { width: 8.33%;  }
+  .col-mobile-2  { width: 16.66%; }
+  .col-mobile-3  { width: 25%;    }
+  .col-mobile-4  { width: 33.33%; }
+  .col-mobile-5  { width: 41.66%; }
+  .col-mobile-6  { width: 50%;    }
+  .col-mobile-7  { width: 58.33%; }
+  .col-mobile-8  { width: 66.66%; }
+  .col-mobile-9  { width: 75%;    }
+  .col-mobile-10 { width: 83.33%; }
+  .col-mobile-11 { width: 91.66%; }
+  .col-mobile-12 { width: 100%;   }
+}
+
+@media only screen and (min-width: 576px) and (max-width: 991px) {
+  /* For tablets: */
+  .hide-tablet   { display: none; }
+  .col-tablet-1  { width: 8.33%;  }
+  .col-tablet-2  { width: 16.66%; }
+  .col-tablet-3  { width: 25%;    }
+  .col-tablet-4  { width: 33.33%; }
+  .col-tablet-5  { width: 41.66%; }
+  .col-tablet-6  { width: 50%;    }
+  .col-tablet-7  { width: 58.33%; }
+  .col-tablet-8  { width: 66.66%; }
+  .col-tablet-9  { width: 75%;    }
+  .col-tablet-10 { width: 83.33%; }
+  .col-tablet-11 { width: 91.66%; }
+  .col-tablet-12 { width: 100%;   }
+}
+
+@media only screen and (min-width: 992px) {
+  /* For desktop: */
+  .hide-desktop   { display: none; }
+  .col-desktop-1  { width: 8.33%;  }
+  .col-desktop-2  { width: 16.66%; }
+  .col-desktop-3  { width: 25%;    }
+  .col-desktop-4  { width: 33.33%; }
+  .col-desktop-5  { width: 41.66%; }
+  .col-desktop-6  { width: 50%;    }
+  .col-desktop-7  { width: 58.33%; }
+  .col-desktop-8  { width: 66.66%; }
+  .col-desktop-9  { width: 75%;    }
+  .col-desktop-10 { width: 83.33%; }
+  .col-desktop-11 { width: 91.66%; }
+  .col-desktop-12 { width: 100%;   }
+}
+
+.row-1  { height: 8.33%;  width: 100%; }
+.row-2  { height: 16.66%; width: 100%; }
+.row-3  { height: 25%;    width: 100%; }
+.row-4  { height: 33.33%; width: 100%; }
+.row-5  { height: 41.66%; width: 100%; }
+.row-6  { height: 50%;    width: 100%; }
+.row-7  { height: 58.33%; width: 100%; }
+.row-8  { height: 66.66%; width: 100%; }
+.row-9  { height: 75%;    width: 100%; }
+.row-10 { height: 83.33%; width: 100%; }
+.row-11 { height: 91.66%; width: 100%; }
+.row-12 { height: 100%;   width: 100%; }
+
+.debug-1 { background-color: darkblue;      }
+.debug-2 { background-color: darkturquoise; }
+.debug-3 { background-color: darkgoldenrod; }
+.debug-4 { background-color: darkgreen;     }
+.debug-5 { background-color: darkmagenta;   }
+.debug-6 { background-color: darkred;       }
