@@ -19,7 +19,7 @@ export default class Model {
     this.observers.set(key, callback);
   }
 
-  unsubscribe(key, callback) {
-    this.observers.delete(key, callback);
+  unsubscribe(key) {
+    this.observers.delete(key);
   }
 }

@@ -92,3 +92,28 @@ body {
 .debug-4 { background-color: darkgreen;     }
 .debug-5 { background-color: darkmagenta;   }
 .debug-6 { background-color: darkred;       }
+
+.unselectable {
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none;   /* Chrome/Safari/Opera */
+  -khtml-user-select: none;    /* Konqueror */
+  -moz-user-select: none;      /* Firefox */
+  -ms-user-select: none;       /* Internet Explorer/Edge */
+  user-select: none;           /* Non-prefixed version, currently
+                                  not supported by any browser */
+}
+
+@font-face {
+  font-family: 'AppFont-Regular';
+  src: url('./font/OpenSans-Regular.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'AppFont-Bold';
+  src: url('./font/OpenSans-Bold.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'AppFont-SemiBold';
+  src: url('./font/OpenSans-SemiBold.ttf') format('truetype');
+}
