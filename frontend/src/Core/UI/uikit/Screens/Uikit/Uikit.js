@@ -2,6 +2,7 @@ import Button from '../../../base/Button';
 import OutlineButton from '../../../base/OutlineButton';
 import Card from '../../../base/Card';
 import Select from '../../../base/Select';
+import Input from '../../../base/Input';
 
 function ButtonClick() {
   alert('Button');
@@ -90,6 +91,17 @@ export default (
                 onClick: () => { alert('Three'); }
               },
             ]}
+          />
+
+          <div style={{ height: '16px' }}></div>
+
+          <Input
+            width='100%'
+            height='48px'
+            placeholder='Placeholder text'
+            type='text'
+            value='Default text'
+            onChange={(text) => { console.log(text); }}
           />
         </div>
       </div>

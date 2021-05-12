@@ -4,28 +4,28 @@ import { useEffect } from 'react';
 
 export default function Select(props) {
 
-  function renderOption(text, onClick, isDefault) {
-    if (isDefault) {
-      return (
-        <option selected='selected' onClick={onClick}>
-          {text}
-        </option>
-      )
-    } else {
-      return (
-        <option onClick={onClick}>
-          {text}
-        </option>
-      )
-    }
+  function renderOption(text, onClick, index) {
+    return (
+      <option value={`option-${index}`} onClick={onClick} key={`Option${index}`}>
+        {text}
+      </option>
+    );
   }
+  
 
   function renderOptions() {
     const result = [];
     for (let i = 0; i < props.options.length; i += 1) {
-      result.push(renderOption(props.options[i].text, props.options[i].onClick, props.options[i].default ));
+      result.push(renderOption(props.options[i].text, props.options[i].onClick, i));
     }
     return result;
+  }
+
+  function getIndexOfDefault() {
+    for (let i = 0; i < props.options.length; i += 1) {
+      if (props.options[i].default) return i;
+    }
+    return 0;
   }
 
   useEffect(() => {
@@ -52,6 +52,7 @@ export default function Select(props) {
       }}
     >
       <select
+        defaultValue={`option-${getIndexOfDefault()}`}
         className='core-select'
         style={{
           color: color,
