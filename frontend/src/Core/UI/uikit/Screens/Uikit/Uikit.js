@@ -1,5 +1,7 @@
 import Button from '../../../base/Button';
 import OutlineButton from '../../../base/OutlineButton';
+import Card from '../../../base/Card';
+import Select from '../../../base/Select';
 
 function ButtonClick() {
   alert('Button');
@@ -33,16 +35,61 @@ export default (
             text='Test text'
             width='100%'
             height='48px'
-            onClick={ ButtonClick }
+            onClick={ButtonClick}
           />
 
-          <div style={{ height: '8px' }}></div>
+          <div style={{ height: '16px' }}></div>
 
           <OutlineButton
             text='Test text'
             width='100%'
             height='48px'
-            onClick={ OutlineButtonClick }
+            onClick={OutlineButtonClick}
+          />
+
+          <div style={{ height: '16px' }}></div>
+
+          <Card
+            width='100%'
+            height='100px'
+            content={
+              <div
+                style={{
+                  width: '100%',
+                  margin: '8px',
+                }}
+                className='row-container align-right'
+              >
+                <OutlineButton
+                  text='Test text'
+                  width='96px'
+                  height='32px'
+                  onClick={OutlineButtonClick}
+                />
+              </div>
+            }
+          />
+
+          <div style={{ height: '16px' }}></div>
+
+          <Select
+            width='100%'
+            height='48px'
+            options={[
+              {
+                text: 'One',
+                onClick: () => { alert('One'); },
+              },
+              {
+                text: 'Two',
+                onClick: () => { alert('Two'); },
+                default: true,
+              },
+              {
+                text: 'Three',
+                onClick: () => { alert('Three'); }
+              },
+            ]}
           />
         </div>
       </div>

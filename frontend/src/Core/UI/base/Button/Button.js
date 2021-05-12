@@ -1,7 +1,8 @@
+import colors from '../colors';
 
 export default function Button(props) {
-  const backgroundColor = props.backgroundColor ? props.backgroundColor : '#61b75d';
-  const textColor = props.textColor ? props.textColor : '#ffffff';
+  const backgroundColor = props.backgroundColor ? props.backgroundColor : colors.green;
+  const textColor = props.textColor ? props.textColor : colors.white;
   const style = {
     width: props.width,
     height: props.height,
@@ -9,20 +10,19 @@ export default function Button(props) {
     cursor: 'pointer',
     border: `2px solid ${backgroundColor}`,
     color: textColor,
-    borderRadius: '8px',
-    fontFamily: '"AppFont-Regular", sans-serif',
+    borderRadius: '4px',
+    fontFamily: '"AppFont-SemiBold", sans-serif',
     fontSize: '1em',
-    boxShadow: `0px 2px 4px ${backgroundColor}`,
   };
   return (
     <div
       className='row-container align-center'
-      style={ style }
+      style={style}
       onClick={props.onClick}
     >
       <div className='col-container align-center unselectable'>
         <div>
-          { props.text }
+          {props.text}
         </div>
       </div>
     </div>
