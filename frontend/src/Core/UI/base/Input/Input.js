@@ -1,5 +1,5 @@
 import colors from '../colors';
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 export default function Input(props) {
   const color = props.color ? props.color : colors.green;

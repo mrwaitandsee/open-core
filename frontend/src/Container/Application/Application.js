@@ -1,14 +1,15 @@
-import serviceLocator from '../../Core/ServiceLocator';
 import ScreenSystem from '../../Core/UI/ScreenSystem';
-import screenSystemController from '../../Core/UI/ScreenSystemController';
+import DialogSystem from '../../Core/UI/DialogSystem';
 
 export default function Application() {
   return (
     <div className="Application" style={{
       width: '100%',
       height: '100%',
+      backgroundColor: '#ffffff',
     }}>
       <ScreenSystem name='ScreenSystem' />
+      <DialogSystem name='DialogSystem' />
     </div>
   );
 }

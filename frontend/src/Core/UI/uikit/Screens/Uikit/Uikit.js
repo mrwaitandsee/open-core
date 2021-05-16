@@ -1,3 +1,5 @@
+import dialogSystemController from '../../../DialogSystemController';
+
 import Button from '../../../base/Button';
 import OutlineButton from '../../../base/OutlineButton';
 import Card from '../../../base/Card';
@@ -100,9 +102,22 @@ export default (
             height='48px'
             placeholder='Placeholder text'
             type='text'
-            value='Default text'
+            // value='Default text'
             onChange={(text) => { console.log(text); }}
           />
+
+          <div style={{ height: '16px' }}></div>
+
+          <Button
+            text='Show dialog'
+            width='100%'
+            height='48px'
+            onClick={() => {
+              dialogSystemController.open('uikit');
+            }}
+          />
+
+          <div style={{ height: '16px' }}></div>
         </div>
       </div>
     </div>

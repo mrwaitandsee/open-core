@@ -1,6 +1,6 @@
 import serviceLocator from '../../ServiceLocator';
-import React, { useState, useEffect } from 'react';
-import screenSystemController from '../ScreenSystemController';
+import { useState, useEffect } from 'react';
+import { screenComponentController } from '../ComponentSystemController';
 
 export default (props) => {
   const screenModel = serviceLocator.get('global.screen.name');
@@ -18,7 +18,7 @@ export default (props) => {
       width: '100%',
       height: '100%',
     }}>
-      { screenSystemController.getScreen(screenName) }
+      { screenComponentController.getComponent(screenName) }
     </div>
   )
 }
