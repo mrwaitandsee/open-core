@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './Core/CoreInitialization';
+import './Initialization';
 import Application from './Container/Application';
 
 ReactDOM.render(
