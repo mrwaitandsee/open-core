@@ -13,12 +13,14 @@ export default (props) => {
     }
   }, []);
   
+  const Screen = () => screenComponentController.getComponent(screenName)();
+
   return (
     <div style={{
       width: '100%',
       height: '100%',
     }}>
-      { screenComponentController.getComponent(screenName) }
+      <Screen />
     </div>
   )
 }

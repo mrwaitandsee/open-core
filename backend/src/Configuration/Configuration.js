@@ -1,11 +1,11 @@
 
 export default class Configuration {
   static getPortOfApp() {
-    return process.env.PORT || 6000;
+    return process.env.PORT || 5001;
   }
 
   static getApiUri() {
-    return process.env.API_URI || 'http://localhost:4000/';
+    return process.env.API_URI || 'http://localhost:5001/';
   }
 
   static getDatabaseUri() {

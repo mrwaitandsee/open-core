@@ -9,6 +9,10 @@ export default class RoutesBuilder {
     }
 
     app.use('/api', this.router);
+    
+    app.get('/', (req, res) => {
+      res.send('You shall not pass!')
+    });
   }
 
   getRouter() {

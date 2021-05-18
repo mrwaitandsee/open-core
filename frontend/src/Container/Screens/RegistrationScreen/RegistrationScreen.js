@@ -1,14 +1,45 @@
+import { useState } from 'react';
+
 import serviceLocator from '../../../Core/ServiceLocator';
 import Card from '../../../Core/UI/base/Card';
 import Input from '../../../Core/UI/base/Input';
 import Button from '../../../Core/UI/base/Button';
 import OutlineButton from '../../../Core/UI/base/OutlineButton';
 
+import { validateEmail, validateUsername, registration } from '../../../Repository';
+
 export default () => {
-  function buttonRegistrationOnClick() {
-    serviceLocator.get('global.screen.name').set('RegistrationScreen');
+  const [email, setEmail] = useState('');
+  const [nickname, setNickname] = useState('');
+
+  const inputNickname = (text) => setNickname(text);
+  const inputEmailOnChange = (text) => setEmail(text);
+  const buttonLoginOnClick = () => serviceLocator.get('global.screen.name').set('LoginScreen');
+
+  async function buttonRegistrationOnClick() {
+    if (!nickname) {
+      alert('Nickname must be entered!');
+      return;
+    }
+    const validateEmailResponse = await validateEmail(email);
+    if (!validateEmailResponse.success) {
+      alert(validateEmailResponse.message);
+      return;
+    }
+    const validateNicknameResponse = await validateUsername(nickname);
+    if (!validateNicknameResponse.success) {
+      alert(validateNicknameResponse.message);
+      return;
+    }
+    const registrationResponse = await registration(nickname, email);
+    if (registrationResponse.success) {
+      alert('Account has been successfully created! Check your mailbox.');
+      buttonLoginOnClick();
+    } else {
+      alert(registrationResponse.message);
+    }
   }
-  
+
   return (
     <div
       style={{
@@ -38,8 +69,10 @@ export default () => {
                     <Input
                       width='100%'
                       height='3em'
-                      placeholder='email'
-                      type='email'
+                      placeholder='nickname'
+                      type='text'
+                      onChange={inputNickname}
+                      value={nickname}
                     />
                   </div>
                   <div style={{ height: '1em' }}/>
@@ -47,31 +80,26 @@ export default () => {
                     <Input
                       width='100%'
                       height='3em'
-                      placeholder='password'
-                      type='password'
+                      placeholder='email'
+                      type='email'
+                      onChange={inputEmailOnChange}
+                      value={email}
                     />
                   </div>
                   <div style={{ height: '1em' }}/>
                   <div className='row-container align-left'>
-                    <div className='col-desktop-5'>
-                      <div className='row-container'>
-                        <OutlineButton
-                          text='Forgot password'
-                          padding='0.75em'
-                        />
-                      </div>
-                    </div>
-                    <div className='col-desktop-7'>
+                    <div className='col-desktop-12'>
                       <div className='row-container align-right'>
                         <OutlineButton
-                          text='Registration'
+                          text='Login'
                           padding='0.75em'
-                          onClick={buttonRegistrationOnClick}
+                          onClick={buttonLoginOnClick}
                         />
                         <div style={{width: '1em'}}/>
                         <Button
-                          text='Login'
+                          text='Registration'
                           padding='0.75em'
+                          onClick={buttonRegistrationOnClick}
                         />
                       </div>
                     </div>
@@ -102,43 +130,40 @@ export default () => {
                     <Input
                       width='100%'
                       height='3em'
-                      placeholder='email'
-                      type='email'
+                      placeholder='nickname'
+                      type='text'
+                      onChange={inputNickname}
+                      value={nickname}
                     />
                   </div>
-                  <div style={{ height: '1em' }}/>
+                  <div style={{ height: '1em' }} />
                   <div className='row-container align-left'>
                     <Input
                       width='100%'
                       height='3em'
-                      placeholder='password'
-                      type='password'
+                      placeholder='email'
+                      type='email'
+                      onChange={inputEmailOnChange}
+                      value={email}
                     />
                   </div>
                   <div style={{ height: '1em' }}/>
                   <div className='row-container align-left'>
                     <OutlineButton
+                      text='Login'
                       width='100%'
                       height='3em'
-                      text='Forgot password'
-                    />
-                  </div>
-                  <div style={{ height: '1em' }}/>
-                  <div className='row-container align-left'>
-                    <OutlineButton
-                      text='Registration'
-                      width='100%'
-                      height='3em'
-                      onClick={buttonRegistrationOnClick}
+                      onClick={buttonLoginOnClick}
                     />
                   </div>
                   <div className='row-container align-left' style={{ width: '100%', height: '100%' }}>
                     <div className='col-container align-right' style={{ width: '100%', height: '100%' }}>
                       <div className='row-container align-right'>
                         <Button
-                          text='Login'
+                          text='Registration'
                           width='100%'
                           height='3em'
+                          onClick={buttonRegistrationOnClick}
                         />
                       </div>
                     </div>
@@ -152,5 +177,5 @@ export default () => {
         </div>
       </div>
     </div>
-  );
+  )
 }
