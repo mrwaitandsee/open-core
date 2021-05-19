@@ -1,5 +1,4 @@
 import { useState } from 'react';
-
 import serviceLocator from '../../../Core/ServiceLocator';
 import Card from '../../../Core/UI/base/Card';
 import Input from '../../../Core/UI/base/Input';
@@ -12,7 +11,7 @@ export default () => {
   const [email, setEmail] = useState('');
   const [nickname, setNickname] = useState('');
 
-  const inputNickname = (text) => setNickname(text);
+  const inputNicknameOnChange = (text) => setNickname(text);
   const inputEmailOnChange = (text) => setEmail(text);
   const buttonLoginOnClick = () => serviceLocator.get('global.screen.name').set('LoginScreen');
 
@@ -71,7 +70,7 @@ export default () => {
                       height='3em'
                       placeholder='nickname'
                       type='text'
-                      onChange={inputNickname}
+                      onChange={inputNicknameOnChange}
                       value={nickname}
                     />
                   </div>
@@ -132,7 +131,7 @@ export default () => {
                       height='3em'
                       placeholder='nickname'
                       type='text'
-                      onChange={inputNickname}
+                      onChange={inputNicknameOnChange}
                       value={nickname}
                     />
                   </div>

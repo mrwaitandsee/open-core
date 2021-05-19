@@ -1,14 +1,39 @@
+import { useState } from 'react';
 import serviceLocator from '../../../Core/ServiceLocator';
 import Card from '../../../Core/UI/base/Card';
 import Input from '../../../Core/UI/base/Input';
 import Button from '../../../Core/UI/base/Button';
 import OutlineButton from '../../../Core/UI/base/OutlineButton';
+import { login, storage } from '../../../Repository';
 
 export default () => {
-  function buttonRegistrationOnClick() {
-    serviceLocator.get('global.screen.name').set('RegistrationScreen');
-  }
+  const [nickname, setNickname] = useState('');
+  const [password, setPassword] = useState('');
   
+  const inputNicknameOnChange = (text) => setNickname(text);
+  const inputPasswordOnChange = (text) => setPassword(text);
+
+  const buttonForgotPasswordOnClick = () => alert('This functionality is not ready yet.');
+  const buttonRegistrationOnClick = () => serviceLocator.get('global.screen.name').set('RegistrationScreen');
+  const buttonLoginOnClick = async () => {
+    if (!nickname) {
+      alert('Enter nickname!');
+      return;
+    }
+    if (!password) {
+      alert('Enter password!');
+      return;
+    }
+    const loginResponse = await login(nickname, password);
+    if (loginResponse.success) {
+      alert(loginResponse.message);
+      console.log(loginResponse);
+      storage.saveToken(loginResponse.accessToken);
+    } else {
+      alert(loginResponse.message);
+    }
+  };
+
   return (
     <div
       style={{
@@ -38,8 +63,10 @@ export default () => {
                     <Input
                       width='100%'
                       height='3em'
-                      placeholder='email'
-                      type='email'
+                      placeholder='nickname'
+                      type='text'
+                      onChange={inputNicknameOnChange}
+                      value={nickname}
                     />
                   </div>
                   <div style={{ height: '1em' }}/>
@@ -49,6 +76,8 @@ export default () => {
                       height='3em'
                       placeholder='password'
                       type='password'
+                      onChange={inputPasswordOnChange}
+                      value={password}
                     />
                   </div>
                   <div style={{ height: '1em' }}/>
@@ -58,6 +87,7 @@ export default () => {
                         <OutlineButton
                           text='Forgot password'
                           padding='0.75em'
+                          onClick={buttonForgotPasswordOnClick}
                         />
                       </div>
                     </div>
@@ -72,6 +102,7 @@ export default () => {
                         <Button
                           text='Login'
                           padding='0.75em'
+                          onClick={buttonLoginOnClick}
                         />
                       </div>
                     </div>
@@ -102,8 +133,10 @@ export default () => {
                     <Input
                       width='100%'
                       height='3em'
-                      placeholder='email'
-                      type='email'
+                      placeholder='nickname'
+                      type='text'
+                      onChange={inputNicknameOnChange}
+                      value={nickname}
                     />
                   </div>
                   <div style={{ height: '1em' }}/>
@@ -113,6 +146,8 @@ export default () => {
                       height='3em'
                       placeholder='password'
                       type='password'
+                      onChange={inputPasswordOnChange}
+                      value={password}
                     />
                   </div>
                   <div style={{ height: '1em' }}/>
@@ -121,6 +156,7 @@ export default () => {
                       width='100%'
                       height='3em'
                       text='Forgot password'
+                      onClick={buttonForgotPasswordOnClick}
                     />
                   </div>
                   <div style={{ height: '1em' }}/>
@@ -139,11 +175,11 @@ export default () => {
                           text='Login'
                           width='100%'
                           height='3em'
+                          onClick={buttonLoginOnClick}
                         />
                       </div>
                     </div>
                   </div>
-
                   <div style={{ height: '1em' }}/>
                 </div>
               }
