@@ -1,8 +1,8 @@
 import colors from '../colors';
 
 export default function OutlineButton(props) {
-  const color = props.color ? props.color : colors.green;
-  const textColor = props.textColor ? props.textColor : colors.green;
+  const color = props.color ? props.color : colors.gray;
+  const textColor = props.textColor ? props.textColor : colors.white;
   const style = {
     width: props.width,
     height: props.height,
@@ -12,7 +12,9 @@ export default function OutlineButton(props) {
     borderRadius: '4px',
     fontFamily: '"AppFont-SemiBold", sans-serif',
     fontSize: '1em',
+    boxShadow: `0px 0px 4px ${colors.black}66`,
     padding: props.padding,
+    ...props.style,
   };
   return (
     <div

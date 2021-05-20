@@ -1,0 +1,15 @@
+
+.open-core-input::placeholder {
+  color: #ffffff;
+  opacity: 1;
+}
+
+.open-core-input::-moz-placeholder {
+  color: #ffffff;
+  opacity: 1;
+}
+
+.open-core-input::-webkit-input-placeholder {
+  color: #ffffff;
+  opacity: 0.75;
+}

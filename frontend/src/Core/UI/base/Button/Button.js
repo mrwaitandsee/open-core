@@ -13,6 +13,7 @@ export default function Button(props) {
     borderRadius: '4px',
     fontFamily: '"AppFont-SemiBold", sans-serif',
     fontSize: '1em',
+    boxShadow: `0px 0px 4px ${colors.black}66`,
     padding: props.padding,
   };
   return (

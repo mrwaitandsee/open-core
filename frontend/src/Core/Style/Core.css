@@ -1,6 +1,7 @@
 body {
   padding: 0;
   margin:  0;
+  background-color: #000000;
 }
 
 .col-container {
@@ -116,4 +117,22 @@ body {
 @font-face {
   font-family: 'AppFont-SemiBold';
   src: url('./font/OpenSans-SemiBold.ttf') format('truetype');
+}
+
+.scroller {
+  scrollbar-color: #f8f9fa transparent;
+  scrollbar-width: 4px;
+}
+
+::-webkit-scrollbar {
+  height: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent; 
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+  background: #f8f9fa; 
 }

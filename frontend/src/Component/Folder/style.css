@@ -1,0 +1,21 @@
+.folder {
+  width: 8em;
+  height: 6em;
+  margin: 0 auto;
+  margin-top: 50px;
+  position: relative;
+  background-color: #ffc107;
+  border-radius: 0 4px 4px 4px;
+  box-shadow: 0px 0px 4px #00000066;
+}
+
+.folder:before {
+  content: '';
+  width: 50%;
+  height: 16px;
+  border-radius: 4px 4px 0 0;
+  background-color:#b88f16;
+  position: absolute;
+  top: -16px;
+  left: 0px;
+}

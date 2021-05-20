@@ -6,6 +6,7 @@ import Button from '../../../Core/UI/base/Button';
 import OutlineButton from '../../../Core/UI/base/OutlineButton';
 
 import { validateEmail, validateUsername, registration } from '../../../Repository';
+import colors from '../../../Core/UI/base/colors';
 
 export default () => {
   const [email, setEmail] = useState('');
@@ -17,22 +18,22 @@ export default () => {
 
   async function buttonRegistrationOnClick() {
     if (!nickname) {
-      alert('Nickname must be entered!');
+      alert('Введите имя пользователя.');
       return;
     }
     const validateEmailResponse = await validateEmail(email);
     if (!validateEmailResponse.success) {
-      alert(validateEmailResponse.message);
+      alert('Что-то не так с email. Попробуйте ввести другой.');
       return;
     }
     const validateNicknameResponse = await validateUsername(nickname);
     if (!validateNicknameResponse.success) {
-      alert(validateNicknameResponse.message);
+      alert('Это имя пользователя уже занято.');
       return;
     }
     const registrationResponse = await registration(nickname, email);
     if (registrationResponse.success) {
-      alert('Account has been successfully created! Check your mailbox.');
+      alert('Аккаунт успешно создан! Проверьте свой почтовый ящик.');
       buttonLoginOnClick();
     } else {
       alert(registrationResponse.message);
@@ -44,6 +45,7 @@ export default () => {
       style={{
         width: '100%',
         height: '100vh',
+        backgroundColor: colors.dark,
       }}
       className='col-container align-center'
     >
@@ -68,7 +70,7 @@ export default () => {
                     <Input
                       width='100%'
                       height='3em'
-                      placeholder='nickname'
+                      placeholder='Имя пользователя'
                       type='text'
                       onChange={inputNicknameOnChange}
                       value={nickname}
@@ -90,13 +92,13 @@ export default () => {
                     <div className='col-desktop-12'>
                       <div className='row-container align-right'>
                         <OutlineButton
-                          text='Login'
+                          text='Войти'
                           padding='0.75em'
                           onClick={buttonLoginOnClick}
                         />
                         <div style={{width: '1em'}}/>
                         <Button
-                          text='Registration'
+                          text='Регистрация'
                           padding='0.75em'
                           onClick={buttonRegistrationOnClick}
                         />
@@ -129,7 +131,7 @@ export default () => {
                     <Input
                       width='100%'
                       height='3em'
-                      placeholder='nickname'
+                      placeholder='Имя пользователя'
                       type='text'
                       onChange={inputNicknameOnChange}
                       value={nickname}
@@ -148,27 +150,22 @@ export default () => {
                   </div>
                   <div style={{ height: '1em' }}/>
                   <div className='row-container align-left'>
+                    <Button
+                      text='Регистрация'
+                      width='100%'
+                      height='3em'
+                      onClick={buttonRegistrationOnClick}
+                    />
+                  </div>
+                  <div style={{ height: '2em' }}/>
+                  <div className='row-container align-left'>
                     <OutlineButton
-                      text='Login'
+                      text='Войти'
                       width='100%'
                       height='3em'
                       onClick={buttonLoginOnClick}
                     />
                   </div>
-                  <div className='row-container align-left' style={{ width: '100%', height: '100%' }}>
-                    <div className='col-container align-right' style={{ width: '100%', height: '100%' }}>
-                      <div className='row-container align-right'>
-                        <Button
-                          text='Registration'
-                          width='100%'
-                          height='3em'
-                          onClick={buttonRegistrationOnClick}
-                        />
-                      </div>
-                    </div>
-                  </div>
-
-                  <div style={{ height: '1em' }}/>
                 </div>
               }
             />

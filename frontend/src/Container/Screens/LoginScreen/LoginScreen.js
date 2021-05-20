@@ -5,6 +5,7 @@ import Input from '../../../Core/UI/base/Input';
 import Button from '../../../Core/UI/base/Button';
 import OutlineButton from '../../../Core/UI/base/OutlineButton';
 import { login, storage } from '../../../Repository';
+import colors from '../../../Core/UI/base/colors';
 
 export default () => {
   const [nickname, setNickname] = useState('');
@@ -13,34 +14,41 @@ export default () => {
   const inputNicknameOnChange = (text) => setNickname(text);
   const inputPasswordOnChange = (text) => setPassword(text);
 
-  const buttonForgotPasswordOnClick = () => alert('This functionality is not ready yet.');
+  const buttonForgotPasswordOnClick = () => alert('Эта функциональность ещё не готова.');
   const buttonRegistrationOnClick = () => serviceLocator.get('global.screen.name').set('RegistrationScreen');
   const buttonLoginOnClick = async () => {
     if (!nickname) {
-      alert('Enter nickname!');
+      alert('Введите имя пользователя.');
       return;
     }
     if (!password) {
-      alert('Enter password!');
+      alert('Введите пароль.');
       return;
     }
     const loginResponse = await login(nickname, password);
     if (loginResponse.success) {
-      alert(loginResponse.message);
-      console.log(loginResponse);
       storage.saveToken(loginResponse.accessToken);
+      serviceLocator.get('global.screen.name').set('DashboardScreen');
     } else {
       alert(loginResponse.message);
     }
   };
+
+  const handleKeyDown = (event) => {
+    if (event.key === 'Enter') {
+      buttonLoginOnClick();
+    }
+  }
 
   return (
     <div
       style={{
         width: '100%',
         height: '100vh',
+        backgroundColor: colors.dark,
       }}
       className='col-container align-center'
+      onKeyDown={handleKeyDown}
     >
       <div className='row-container align-center'>
         <div className='col-desktop-6 hide-mobile hide-tablet'>
@@ -63,7 +71,7 @@ export default () => {
                     <Input
                       width='100%'
                       height='3em'
-                      placeholder='nickname'
+                      placeholder='Имя пользователя'
                       type='text'
                       onChange={inputNicknameOnChange}
                       value={nickname}
@@ -74,7 +82,7 @@ export default () => {
                     <Input
                       width='100%'
                       height='3em'
-                      placeholder='password'
+                      placeholder='Пароль'
                       type='password'
                       onChange={inputPasswordOnChange}
                       value={password}
@@ -85,7 +93,7 @@ export default () => {
                     <div className='col-desktop-5'>
                       <div className='row-container'>
                         <OutlineButton
-                          text='Forgot password'
+                          text='Забыли пароль?'
                           padding='0.75em'
                           onClick={buttonForgotPasswordOnClick}
                         />
@@ -94,13 +102,13 @@ export default () => {
                     <div className='col-desktop-7'>
                       <div className='row-container align-right'>
                         <OutlineButton
-                          text='Registration'
+                          text='Регистрация'
                           padding='0.75em'
                           onClick={buttonRegistrationOnClick}
                         />
                         <div style={{width: '1em'}}/>
                         <Button
-                          text='Login'
+                          text='Войти'
                           padding='0.75em'
                           onClick={buttonLoginOnClick}
                         />
@@ -133,7 +141,7 @@ export default () => {
                     <Input
                       width='100%'
                       height='3em'
-                      placeholder='nickname'
+                      placeholder='Имя пользователя'
                       type='text'
                       onChange={inputNicknameOnChange}
                       value={nickname}
@@ -144,7 +152,7 @@ export default () => {
                     <Input
                       width='100%'
                       height='3em'
-                      placeholder='password'
+                      placeholder='Пароль'
                       type='password'
                       onChange={inputPasswordOnChange}
                       value={password}
@@ -152,35 +160,32 @@ export default () => {
                   </div>
                   <div style={{ height: '1em' }}/>
                   <div className='row-container align-left'>
-                    <OutlineButton
+                    <Button
+                      text='Войти'
                       width='100%'
                       height='3em'
-                      text='Forgot password'
-                      onClick={buttonForgotPasswordOnClick}
+                      onClick={buttonLoginOnClick}
                     />
                   </div>
-                  <div style={{ height: '1em' }}/>
+                  <div style={{ height: '2em' }}/>
                   <div className='row-container align-left'>
                     <OutlineButton
-                      text='Registration'
+                      text='Регистрация'
                       width='100%'
                       height='3em'
                       onClick={buttonRegistrationOnClick}
                     />
                   </div>
-                  <div className='row-container align-left' style={{ width: '100%', height: '100%' }}>
-                    <div className='col-container align-right' style={{ width: '100%', height: '100%' }}>
-                      <div className='row-container align-right'>
-                        <Button
-                          text='Login'
-                          width='100%'
-                          height='3em'
-                          onClick={buttonLoginOnClick}
-                        />
-                      </div>
-                    </div>
-                  </div>
                   <div style={{ height: '1em' }}/>
+                  <div className='row-container align-left'>
+                    <OutlineButton
+                      width='100%'
+                      height='3em'
+                      text='Забыли пароль?'
+                      onClick={buttonForgotPasswordOnClick}
+                    />
+                  </div>
+                  
                 </div>
               }
             />
